@@ -20,6 +20,7 @@ RUN npm run build:main
 FROM node:lts-slim
 
 # Labels for GitHub to read your action
+LABEL "maintainer"="Decathlon <developers@decathlon.com>"
 LABEL "com.github.actions.name"="PR label by Files"
 LABEL "com.github.actions.description"="Label a Pull Request based on pushed files "
 # Here are all of the available icons: https://feathericons.com/
