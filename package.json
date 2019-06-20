@@ -1,0 +1,29 @@
+{
+  "name": "gh-labeler-action",
+  "version": "1.0.0",
+  "description": "Dynamically tag your pull requests with custom labels based on changed files",
+  "main": "build/entrypoint.js",
+  "scripts": {
+    "start": "node ./build/entrypoint.js",
+    "test": "jest --collect-coverage",
+    "test:watch": "jest --watchAll",
+    "build:main": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "actions-toolkit": "^2.1.0",
+    "jest-junit": "^6.4.0"
+  },
+  "devDependencies": {
+    "@octokit/rest": "^16.28.1",
+    "@types/jest": "^24.0.15",
+    "awesome-typescript-loader": "^5.2.1",
+    "jest": "^24.8.0",
+    "signale": "^1.4.0",
+    "source-map-loader": "^0.2.4",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-immutable": "^6.0.0",
+    "typescript": "^3.5.2"
+  }
+}

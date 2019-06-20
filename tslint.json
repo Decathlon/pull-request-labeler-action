@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-config-prettier",
+    "tslint-immutable"
+  ],
+  "rules": {
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "no-implicit-dependencies": [
+      false
+    ],
+    "no-var-keyword": true,
+    "no-parameter-reassignment": true,
+    "typedef": [
+      true,
+      "call-signature"
+    ],
+    "no-let": true,
+    "no-object-mutation": true,
+    "no-delete": true,
+    "no-method-signature": true,
+    "no-this": true,
+    "no-class": true,
+    "no-mixed-interface": true,
+    "adjacent-overload-signatures": true
+  }
+}
