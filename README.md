@@ -2,16 +2,16 @@
 
 GitHub actions to auto label a pull request based on committed files.
 
-![intro](assets/intro.png)
+<p align="center">
+  <img src="https://github.com/Decathlon/pull-request-labeler-action/raw/master/assets/intro.png" alt="Result illustration"/>
+</p>
 
 When pushing, the action will be triggered and will look for committed files over your branch.
 It applies configured labels whenever it find a file whose name matches the associated regular expression.
 
-![screenshot](assets/screenshot.png)
-*Expected result after processing*
-
 <p align="center">
-  <img src="./assets/log.png" alt="Action log messages"/>
+  <img src="https://github.com/Decathlon/pull-request-labeler-action/raw/master/assets/screenshot.png" alt="Expected result after processing"/>
+  <img src="https://github.com/Decathlon/pull-request-labeler-action/raw/master/assets/log.png" alt="Action log messages"/>
 </p>
 
 ## Startup
