@@ -26,9 +26,12 @@ Create a file into your root project directory: `.github/label-pr.yml`:
   labels: ["database", "critical"]
 - regExp: ".*\\.md+$"
   labels: ["documentation"]
+- regExp: "^(pom\\.xml|package\\.json|build\\.gradle)$"
+  labels: ["dependencies"]
 - regExp: ".*\\.(zip|jar|war|ear)+$"
   labels: ["artifact", "invalid"]
 ```
+_This is a sample to illustrate how you can customize your settings by configuring your own regex and labels_
 
 The configuration is made of a list of `Filter` which are composed of:
 - `regExp`: a regular expression which will be tested over the filenames
