@@ -28,7 +28,18 @@ const findRepositoryInformation = (gitHubEventPath: string, log: LoggerFunc & Si
   };
 };
 
+const logo = `
+██████╗ ███████╗ ██████╗ █████╗ ████████╗██╗  ██╗██╗      ██████╗ ███╗   ██╗
+██╔══██╗██╔════╝██╔════╝██╔══██╗╚══██╔══╝██║  ██║██║     ██╔═══██╗████╗  ██║
+██║  ██║█████╗  ██║     ███████║   ██║   ███████║██║     ██║   ██║██╔██╗ ██║
+██║  ██║██╔══╝  ██║     ██╔══██║   ██║   ██╔══██║██║     ██║   ██║██║╚██╗██║
+██████╔╝███████╗╚██████╗██║  ██║   ██║   ██║  ██║███████╗╚██████╔╝██║ ╚████║
+╚═════╝ ╚══════╝ ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝
+`
+
 Toolkit.run(async (toolkit: Toolkit) => {
+    toolkit.log.info('Open sourced by\n'+logo);
+
     toolkit.log.info('Running Action');
     const filters: Filter[] = toolkit.config('.github/label-pr.yml');
     toolkit.log.info(" Configured filters: ", filters);
