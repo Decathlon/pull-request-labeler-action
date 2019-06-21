@@ -2,8 +2,6 @@
 
 GitHub actions to auto label a pull request based on committed files.
 
-![intro](assets/intro.png)
-
 <p align="center">
   <img src="https://github.com/Decathlon/pull-request-labeler-action/raw/master/assets/intro.png" alt="Result illustration"/>
 </p>
