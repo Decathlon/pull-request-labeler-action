@@ -28,7 +28,7 @@ action "Create Release Notes" {
   }
 }
 
-action "Upload Release Notes on Wiki" {
+action "Upload Release Notes to Wiki" {
   uses = "docker://decathlon/wiki-page-creator-action:1.0.0"
   needs = ["Create Release Notes"]
   secrets = [
