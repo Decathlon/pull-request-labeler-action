@@ -36,9 +36,9 @@ action "Upload Release Notes to Wiki" {
   ]
   env = {
     ACTION_MAIL = "oss@decathlon.com"
-    ACTION_NAME = "decathlon"
-    OWNER = "dktunited"
-    REPO_NAME = "developers-back"
+    ACTION_NAME = "decathlonbot"
+    OWNER = "decathlon"
+    REPO_NAME = "pull-request-labeler-action"
     SKIP_MD = "README.md"
     MD_FOLDER = "temp_release_notes"
   }
