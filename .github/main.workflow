@@ -10,7 +10,7 @@ action "PR label by Files" {
 
 workflow "Milestone Closure" {
   on = "milestone"
-  resolves = ["Upload Release Notes on Wiki"]
+  resolves = ["Upload Release Notes to Wiki"]
 }
 
 action "action-filter" {
