@@ -36,6 +36,9 @@ jobs:
     steps:
       - checkout
       - run: 
+          name: Build and install dependencies
+          command: npm install
+      - run: 
           name: Run tests with JUnit as reporter
           command: ./node_modules/.bin/jest --collect-coverage --ci --runInBand --reporters=default --reporters=jest-junit
           environment:
