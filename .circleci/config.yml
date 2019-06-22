@@ -7,6 +7,8 @@ jobs:
     working_directory: ~/repo
 
     steps:
+      - run: |
+          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
       - checkout
       # Download and cache dependencies
       - restore_cache:
@@ -15,18 +17,40 @@ jobs:
       - run: 
           name: Build and install dependencies
           command: npm install
+      - run:
+          command: fossa init
+          working_directory: ~/repo
+      - run:
+          command: fossa analyze
+          working_directory: ~/repo
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      # run tests!
+  test:
+    docker:
+      - image: circleci/node:lts-jessie
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
       - run: 
           name: Run tests with JUnit as reporter
           command: ./node_modules/.bin/jest --collect-coverage --ci --runInBand --reporters=default --reporters=jest-junit
           environment:
             JEST_JUNIT_OUTPUT_DIR: test-results
+      - run:
+          name: Run Fossa Licences Test
+          command: fossa test
+          working_directory: <repo_dir>
       - store_artifacts:
           path: coverage
       - store_test_results:
           path: test-results
-
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
