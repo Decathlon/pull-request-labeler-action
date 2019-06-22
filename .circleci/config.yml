@@ -34,6 +34,8 @@ jobs:
     working_directory: ~/repo
 
     steps:
+    - run: |
+          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
       - checkout
       - run: 
           name: Build and install dependencies
