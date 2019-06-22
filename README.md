@@ -1,4 +1,6 @@
 # Github auto-labeler action
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action?ref=badge_shield)
+
 
 GitHub actions to auto label a pull request based on committed files.
 
@@ -69,3 +71,7 @@ You may need to set it up so it uses the node configuration (`package.json`) and
 ### Commands
 - To run unit tests: `npm run test:watch`
 - To build: `npm run build:main`
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action?ref=badge_large)
