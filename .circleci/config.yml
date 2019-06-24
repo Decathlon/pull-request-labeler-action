@@ -27,6 +27,9 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
       - run: 
           name: Build and install dependencies
           command: npm install
