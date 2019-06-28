@@ -1,5 +1,6 @@
 # Github auto-labeler action
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action?ref=badge_shield)
+[![CircleCI](https://circleci.com/gh/Decathlon/pull-request-labeler-action/tree/master.svg?style=svg)](https://circleci.com/gh/Decathlon/pull-request-labeler-action/tree/master)
 
 GitHub actions to auto label a pull request based on committed files.
 
