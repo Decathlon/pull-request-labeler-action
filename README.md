@@ -19,7 +19,6 @@
   - [Commands](#commands)
 - [License](#license)
 
-
 ## Common usage
 
 When pushing, the action will be triggered and will look for committed files over your branch.
@@ -31,7 +30,6 @@ It applies configured labels whenever it find a file whose name matches the asso
 </p>
 
 ## Breaking change
-
 
 Starting from August 2019, GitHub switch [Actions syntax from HCL to YAML](https://help.github.com/en/articles/migrating-github-actions-from-hcl-syntax-to-yaml-syntax).  
 The previous syntax will no longer be supported by GitHub on September 30, 2019.
