@@ -2,7 +2,7 @@ on: milestone
 name: Milestone Closure
 jobs:
   action-filter:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@master
     - name: action-filter

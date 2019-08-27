@@ -3,7 +3,7 @@
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action.svg?type=shield"></a>
   <a href="https://circleci.com/gh/Decathlon/pull-request-labeler-action/tree/master"><img src="https://circleci.com/gh/Decathlon/pull-request-labeler-action.svg?style=svg"></a>
   <br><br>
-  This repository provide a GitHub actions to <strong>auto label a pull request</strong> based on committed files.
+  This repository provides a GitHub action to <strong>automatically label a pull request</strong> based on committed files.
 </p>
 
 **Table of Contents**
@@ -19,7 +19,6 @@
   - [Commands](#commands)
 - [License](#license)
 
-
 ## Common usage
 
 When pushing, the action will be triggered and will look for committed files over your branch.
@@ -31,7 +30,6 @@ It applies configured labels whenever it find a file whose name matches the asso
 </p>
 
 ## Breaking change
-
 
 Starting from August 2019, GitHub switch [Actions syntax from HCL to YAML](https://help.github.com/en/articles/migrating-github-actions-from-hcl-syntax-to-yaml-syntax).  
 The previous syntax will no longer be supported by GitHub on September 30, 2019.

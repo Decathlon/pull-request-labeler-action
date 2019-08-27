@@ -3,7 +3,7 @@ name: Auto Label Pull Request
 jobs:
   pRLabelByFiles:
     name: PR label by Files
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@master
     - name: PR label by Files
