@@ -96,7 +96,8 @@ Toolkit.run(async (toolkit: Toolkit) => {
     toolkit.log.info('Open sourced by\n' + LOGO);
 
     toolkit.log.info('Running Action');
-    const filters: Filter[] = toolkit.config('.github/label-pr.yml');
+    const configPath : string = process.env.CONFIG_PATH ? process.env.CONFIG_PATH : '.github/label-pr.yml';
+    const filters: Filter[] = toolkit.config(configPath);
     toolkit.log.info(" Configured filters: ", filters);
 
     if (!process.env.GITHUB_EVENT_PATH) {
