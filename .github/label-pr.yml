@@ -10,3 +10,5 @@
   labels: ["dependencies"]
 - regExp: ".*\\.(zip|jar|war|ear)+$"
   labels: ["artifact", "invalid"]
+- regExp: ".*\\.yml+$"
+  labels: ["settings"]
