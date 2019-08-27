@@ -72,7 +72,7 @@ const getLabelsToAdd = (labels: string[], issueLabels: string[], {log, exit}: To
   const labelsToAdd: string[] = intersectLabels(labels, issueLabels);
   log.info('Labels to add: ', labelsToAdd);
   if (labelsToAdd.length === 0) {
-    exit.neutral("No labels to add");
+    exit.success("No labels to add");
   }
   return labelsToAdd;
 };
@@ -96,7 +96,8 @@ Toolkit.run(async (toolkit: Toolkit) => {
     toolkit.log.info('Open sourced by\n' + LOGO);
 
     toolkit.log.info('Running Action');
-    const filters: Filter[] = toolkit.config('.github/label-pr.yml');
+    const configPath: string = process.env.CONFIG_PATH ? process.env.CONFIG_PATH : '.github/label-pr.yml';
+    const filters: Filter[] = toolkit.config(configPath);
     toolkit.log.info(" Configured filters: ", filters);
 
     if (!process.env.GITHUB_EVENT_PATH) {
@@ -123,8 +124,8 @@ Toolkit.run(async (toolkit: Toolkit) => {
           }
         )
         .then((addLabelsParams: IssuesAddLabelsParams) => issues.addLabels(addLabelsParams))
-        .then((value: Response<IssuesAddLabelsResponseItem[]>) => toolkit.log.info(`Adding label status: ${value.status}`))
-        .catch(reason => toolkit.exit.failure(reason));
+        .catch(reason => toolkit.exit.failure(reason))
+        .then((value: Response<IssuesAddLabelsResponseItem[]>) => toolkit.log.info(`Adding label status: ${value.status}`));
     }
     toolkit.exit.success('Labels were update into pull request')
   },
