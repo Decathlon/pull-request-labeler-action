@@ -6,6 +6,8 @@
   This repository provides a GitHub action to <strong>automatically label a pull request</strong> based on committed files.
 </p>
 
+Small change. Should not be merged. :)
+
 **Table of Contents**
 
 - [Common usage](#common-usage)
