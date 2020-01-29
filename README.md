@@ -63,7 +63,6 @@ If the labels do not exist yet in your repository configuration, they will be cr
 
 ### Use Github action
 
-
 #### Settings for v1.0.0+ release (deprecated)
 
 Create a file into your root project directory (if it does not exist yet): `.github/main.workflow`:
