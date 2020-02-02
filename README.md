@@ -12,7 +12,7 @@
 - [Breaking change](#breaking-change)
 - [Startup](#startup)
   - [Configuration](#configuration)
-  - [Use Github action](#use-github-action)
+  - [Use GitHub action](#use-github-action)
     - [Settings for v1.0.0+ release (deprecated)](#settings-for-v100-release-deprecated)
     - [Settings for v2.0.0+ release](#settings-for-v200-release)
 - [Contributing](#contributing)
@@ -61,7 +61,7 @@ The configuration is made of a list of `Filter` which are composed of:
 
 If the labels do not exist yet in your repository configuration, they will be created anyway.
 
-### Use Github action
+### Use GitHub action
 
 #### Settings for v1.0.0+ release (deprecated)
 
