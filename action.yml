@@ -1,0 +1,15 @@
+name: Pull request labeler
+author: Decathlon <developers@decathlon.com>
+description: This Github action <strong>automatically labels a pull request</strong> based on committed files.
+When pushing, the action will be triggered and will look for committed files over your branch.
+It applies configured labels whenever it find a file whose name matches the associated regular expression.
+<p align="center">
+<img src="https://github.com/Decathlon/pull-request-labeler-action/raw/master/assets/screenshot.png" alt="Expected result after processing"/>
+<img src="https://github.com/Decathlon/pull-request-labeler-action/raw/master/assets/log.png" alt="Action log messages"/>
+</p>
+runs:
+  using: 'docker'
+  image: 'docker://decathlon/pull-request-labeler-action:2.0.0'
+branding:
+  icon: tag
+  color: blue
