@@ -1,5 +1,7 @@
-import { IssuesRemoveLabelParams, PullsListFilesResponseItem } from '@octokit/rest';
-import { Filter, Repository } from './types';
+import {Filter, Repository} from './types';
+import {Octokit} from "@octokit/rest";
+import PullsListFilesResponseItem = Octokit.PullsListFilesResponseItem;
+import IssuesRemoveLabelParams = Octokit.IssuesRemoveLabelParams;
 
 // Process the list of files being committed to return the list of eligible filters (whose filename matches their regExp)
 export const processListFilesResponses = (files: PullsListFilesResponseItem[], filters: Filter[]): Filter[] =>
@@ -13,7 +15,7 @@ export const filterConfiguredIssueLabels = (labels: string[], filters: Filter[])
 };
 
 // Build a list of IssueRemoveLabelParams from the list of provided labels
-export const buildIssueRemoveLabelParams = ({ repo, issue_number, owner }: Repository, labels: string[]): IssuesRemoveLabelParams[] => {
+export const buildIssueRemoveLabelParams = ({repo, issue_number, owner}: Repository, labels: string[]): IssuesRemoveLabelParams[] => {
   return labels.map(label => ({
     issue_number,
     name: label,

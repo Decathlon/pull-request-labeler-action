@@ -1,20 +1,9 @@
-import {
-  IssuesAddLabelsParams,
-  IssuesAddLabelsResponseItem,
-  IssuesListLabelsOnIssueParams,
-  IssuesListLabelsOnIssueResponse,
-  PullsListFilesParams,
-  PullsListFilesResponse,
-  PullsListFilesResponseItem,
-  Response
-} from '@octokit/rest';
 import {Toolkit, ToolkitOptions} from 'actions-toolkit';
 // tslint:disable-next-line:no-submodule-imports
 import {WebhookPayloadWithRepository} from 'actions-toolkit/lib/context';
 // tslint:disable-next-line:no-submodule-imports
 import {Exit} from 'actions-toolkit/lib/exit';
 // tslint:disable-next-line:no-submodule-imports
-import {GitHub} from 'actions-toolkit/lib/github';
 import {LoggerFunc, Signale} from 'signale';
 import {Filter, Repository} from './types';
 import {
@@ -23,6 +12,16 @@ import {
   intersectLabels,
   processListFilesResponses
 } from './utils';
+import {Octokit} from "@octokit/rest";
+import IssuesListLabelsOnIssueParams = Octokit.IssuesListLabelsOnIssueParams;
+import IssuesListLabelsOnIssueResponse = Octokit.IssuesListLabelsOnIssueResponse;
+import PullsListFilesParams = Octokit.PullsListFilesParams;
+import PullsListFilesResponseItem = Octokit.PullsListFilesResponseItem;
+import Response = Octokit.Response;
+import PullsListFilesResponse = Octokit.PullsListFilesResponse;
+import IssuesAddLabelsParams = Octokit.IssuesAddLabelsParams;
+import IssuesAddLabelsResponseItem = Octokit.IssuesAddLabelsResponseItem;
+import IssuesGetParams = Octokit.IssuesGetParams;
 
 const LOGO: string = `
 ██████╗ ███████╗ ██████╗ █████╗ ████████╗██╗  ██╗██╗      ██████╗ ███╗   ██╗
@@ -53,18 +52,18 @@ const findRepositoryInformation = (gitHubEventPath: string, log: LoggerFunc & Si
 };
 
 // Find configured filters from the issue labels
-const findIssueLabels = (issuesListLabelsOnIssueParams: IssuesListLabelsOnIssueParams, issues, filters: Filter[]): Promise<string[]> => {
+const findIssueLabels = (octokit: Octokit, issuesGetParams: IssuesGetParams, filters: Filter[]): Promise<string[]> => {
   // Find issue labels that are configured in .github/label-pr.yml
-  return issues.listLabelsOnIssue(issuesListLabelsOnIssueParams)
+  return octokit.issues.listLabelsOnIssue(issuesGetParams)
     .then(({data: labels}: Response<IssuesListLabelsOnIssueResponse>) => labels.reduce((acc, label) => acc.concat(label.name), []))
     .then(issueLabels => filterConfiguredIssueLabels(issueLabels, filters));
 };
 
 // Remove provided labels
-const removeIssueLabels = (labels: string[], {log, exit}: Toolkit, repository: Repository, issues): void => {
+const removeIssueLabels = (octokit: Octokit, labels: string[], {log, exit}: Toolkit, repository: Repository): void => {
   log.info('Labels to remove: ', labels);
   buildIssueRemoveLabelParams(repository, labels)
-    .forEach(value => issues.removeLabel(value).catch(reason => exit.failure(reason)));
+    .forEach(value => octokit.issues.removeLabel(value).catch(reason => exit.failure(reason)));
 };
 
 // Build labels to add
@@ -78,19 +77,23 @@ const getLabelsToAdd = (labels: string[], issueLabels: string[], {log, exit}: To
 };
 
 // Fetch all files (by recursively calling with page and per_page parameters)
-const fetchAllFiles = (listFiles, log, params: PullsListFilesParams, per_page: number, page: number): Promise<PullsListFilesResponseItem[]> => {
-  log.info(`Listing files (page: ${page} | per_page: ${per_page})...`);
-  return listFiles({per_page, page, ...params})
+const fetchAllFiles = (octokit: Octokit, pullListFilesParams: PullsListFilesParams, log): Promise<PullsListFilesResponseItem[]> => {
+  log.info(`Listing files (page: ${pullListFilesParams.page} | per_page: ${pullListFilesParams.per_page})...`);
+  return octokit.pulls.listFiles(pullListFilesParams)
     .then((response: Response<PullsListFilesResponse>) => {
       // If there may be other files to fetch
       log.info(`Loaded ${response.data.length} files`);
       let pullsListFilesResponseItems: PullsListFilesResponse = response.data;
-      if (pullsListFilesResponseItems.length >= per_page) {
-        return fetchAllFiles(listFiles, log, params, per_page, page + 1).then(value => value.concat(pullsListFilesResponseItems));
+      if (pullsListFilesResponseItems.length >= pullListFilesParams.per_page) {
+        return fetchAllFiles(octokit, {
+          page: pullListFilesParams.page + 1,
+          ...pullListFilesParams
+        }, log).then(value => value.concat(pullsListFilesResponseItems));
       }
       return pullsListFilesResponseItems;
     });
 };
+
 
 Toolkit.run(async (toolkit: Toolkit) => {
     toolkit.log.info('Open sourced by\n' + LOGO);
@@ -104,14 +107,20 @@ Toolkit.run(async (toolkit: Toolkit) => {
       toolkit.exit.failure('Process env GITHUB_EVENT_PATH is undefined');
     } else {
       const {owner, issue_number, repo}: IssuesListLabelsOnIssueParams = findRepositoryInformation(process.env.GITHUB_EVENT_PATH, toolkit.log, toolkit.exit);
-      const {pulls: {listFiles}, issues}: GitHub = toolkit.github;
+
+      let issuesGetParams: Octokit.IssuesGetParams = {
+        owner,
+        repo,
+        issue_number
+      };
+      const octokit = new Octokit();
 
       // First, we need to retrieve the existing issue labels and filter them over the configured one in config file
-      const issueLabels: string[] = await findIssueLabels({issue_number, owner, repo}, issues, filters);
+      const issueLabels: string[] = await findIssueLabels(octokit, issuesGetParams, filters);
 
-      const params: PullsListFilesParams = {owner, pull_number: issue_number, repo};
+      const params: PullsListFilesParams = {owner, pull_number: issue_number, repo, page: 1, per_page: 100};
 
-      await fetchAllFiles(listFiles, toolkit.log, params, 100, 1)
+      await fetchAllFiles(octokit, params, toolkit.log)
         .then((files: PullsListFilesResponseItem[]) => {
           toolkit.log.info('Checking files...', files.reduce((acc: string[], file: PullsListFilesResponseItem) => acc.concat(file.filename), []));
           return files;
@@ -119,11 +128,11 @@ Toolkit.run(async (toolkit: Toolkit) => {
         .then((files: PullsListFilesResponseItem[]) => processListFilesResponses(files, filters))
         .then((eligibleFilters: Filter[]) => eligibleFilters.reduce((acc: string[], eligibleFilter: Filter) => acc.concat(eligibleFilter.labels), []))
         .then((labels: string[]) => {
-            removeIssueLabels(intersectLabels(issueLabels, labels), toolkit, {owner, issue_number, repo}, issues);
+            removeIssueLabels(octokit, intersectLabels(issueLabels, labels), toolkit, {owner, issue_number, repo});
             return {issue_number, labels: getLabelsToAdd(labels, issueLabels, toolkit), owner, repo};
           }
         )
-        .then((addLabelsParams: IssuesAddLabelsParams) => issues.addLabels(addLabelsParams))
+        .then((addLabelsParams: IssuesAddLabelsParams) => octokit.issues.addLabels(addLabelsParams))
         .catch(reason => toolkit.exit.failure(reason))
         .then((value: Response<IssuesAddLabelsResponseItem[]>) => toolkit.log.info(`Adding label status: ${value.status}`));
     }
