@@ -9,7 +9,7 @@ It applies configured labels whenever it find a file whose name matches the asso
 </p>
 runs:
   using: 'docker'
-  image: 'docker://decathlon/pull-request-labeler-action:2.0.0'
+  image: 'docker://decathlon/pull-request-labeler-action:2.0.1'
 branding:
   icon: tag
   color: blue
