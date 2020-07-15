@@ -31,7 +31,7 @@ It applies configured labels whenever it find a file whose name matches the asso
 
 ## Breaking change
 
-Starting from August 2019, GitHub switch [Actions syntax from HCL to YAML](https://help.github.com/en/articles/migrating-github-actions-from-hcl-syntax-to-yaml-syntax).  
+Starting from August 2019, GitHub switch [Actions syntax from HCL to YAML](https://help.github.com/en/articles/migrating-github-actions-from-hcl-syntax-to-yaml-syntax).
 The previous syntax will no longer be supported by GitHub on September 30, 2019.
 
 As a consequence, __please use v2.0.0+__ release and note that __all v1.x.x are deprecated__ and will no longer work on September 30, 2019.
@@ -93,7 +93,7 @@ jobs:
       # We need to checkout the repository to access the configured file (.github/label-pr.yml)
       - uses: actions/checkout@v2
       - name: Labeler
-        uses: docker://decathlon/pull-request-labeler-action:2.0.1
+        uses: docker://decathlon/pull-request-labeler-action:2.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Here we can override the path for the action configuration. If none is provided, default one is `.github/label-pr.yml`
