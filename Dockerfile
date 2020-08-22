@@ -2,8 +2,9 @@
 FROM node:lts-slim as install-stage
 
 WORKDIR /app
-# Copy the package.json
+# Copy the package.json and package-lock.json
 COPY package.json /app/
+COPY package-lock.json /app/
 # Install node_modules
 RUN npm install
 
