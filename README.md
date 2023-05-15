@@ -1,3 +1,18 @@
+# THIS ACTION IS DEPRECATED AND ARCHIVED.
+# You should not use it anymore, A better alternative is https://github.com/actions/labeler
+
+
+## DEPRECATED, do not use anymore
+
+
+### Readme kept as archive
+
+---
+
+
+
+
+
 <p align="center">
   <img src="https://github.com/Decathlon/pull-request-labeler-action/raw/master/assets/intro.png" alt="Result illustration"/><br>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FDecathlon%2Fpull-request-labeler-action.svg?type=shield"></a>
